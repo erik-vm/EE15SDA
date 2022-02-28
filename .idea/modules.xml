@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Java_Course_SDA.iml" filepath="$PROJECT_DIR$/Java_Course_SDA.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JavaRemoteEE15.iml" filepath="$PROJECT_DIR$/JavaRemoteEE15.iml" />
     </modules>
   </component>
 </project>
