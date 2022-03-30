@@ -16,7 +16,6 @@ public class Question {
             answers[i] = answers[randomIndex];
             answers[randomIndex] = temp;
         }
-
     }
     public Question(){
 

@@ -14,7 +14,7 @@ public class Game {
 
     public static void main(String[] args) {
 
-        System.out.println("Welcome! What do you want to do? \n\t0 - Quit \n\t1 - Play quiz \n\t2 - Enter new questions to quiz");
+      /*  System.out.println("Welcome! What do you want to do? \n\t0 - Quit \n\t1 - Play quiz \n\t2 - Enter new questions to quiz");
 
         int choice;
         boolean quit = false;
@@ -48,17 +48,68 @@ public class Game {
 
 
 
+*/
 
+        char again = 'y';
+        char option = 'p';
+
+        while (again == 'y'){
+            System.out.println("Please choose quiz topic");
+            System.out.println("1 - Capitals");
+            System.out.println("2 - Silly");
+            System.out.println("3 - Sports");
+            System.out.println("Topic:");
+            int input = scanner.nextInt();
+            scanner.nextLine();
+            System.out.println("Do you want to play (p) or add (a) new question?");
+
+            option = scanner.nextLine().charAt(0);
+
+            if (option == 'p'){
+                init(input);
+                loop();
+            }else{
+                addQuestion(input);
+            }
+            System.out.println("Do you want to do something else? y/n");
+            scanner.nextLine();
+            again = scanner.nextLine().charAt(0);
+        }
     }
 
     //Initialize game
-    private static void init() {
+  /*  private static void init() {
         try {
             List<String> lines = Files.readAllLines(Paths.get("Quiz\\data1.txt"));
 
             for (int i = 1; i < lines.size(); i += 4) {
                 Question q;
                 q = new Question(lines.get(i), lines.get(i + 1), lines.get(i + 2), lines.get(i + 3));
+                questions.add(q);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+            System.out.println("Could not load file");
+            System.exit(-1);
+        }
+    }*/
+    private static void init(int number) {
+
+        try {
+            List<String> lines = Files.readAllLines(Paths.get("Quiz\\data" + number + ".txt"));
+
+            //First lines value
+            int temp = Integer.parseInt(lines.get(0));
+
+            for (int i = 1; i < lines.size(); i += temp+1) {
+                Question q;
+
+                if (temp == 3){
+                    q = new Question(lines.get(i), lines.get(i + 1), lines.get(i + 2), lines.get(i + 3));
+                }else {
+                    q = new Question(lines.get(i), lines.get(i + 1), lines.get(i + 2), lines.get(i + 3), lines.get(i + 4));
+                }
+
                 questions.add(q);
             }
         } catch (Exception e) {
@@ -172,5 +223,42 @@ try(BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(filePath, 
 }catch (IOException e){
     e.printStackTrace();
 }
+    }
+
+    private static void addQuestion(int number){
+        Question q = new Question();
+        System.out.println("Please enter question");
+        String text = scanner.nextLine();
+
+        //Adding question to question object
+        q.text = text;
+
+        try{
+            List<String> lines = Files.readAllLines(Paths.get("Quiz\\data" + number + ".txt"));
+            String[] answers = new String[Integer.parseInt(lines.get(0))];
+            for (int i = 0; i < answers.length; i++){
+                System.out.println("Please enter " + (i+1) + ") answer");
+                answers[i] = scanner.nextLine();
+            }
+
+            //Adding answers array to question object field
+            q.answers = answers;
+
+            //Writing info to quiz file
+
+            File file = new File(("Quiz\\data" + number + ".txt"));
+            FileWriter fr = new FileWriter(file, true);
+            BufferedWriter br = new BufferedWriter(fr);
+
+            br.write("\n"+q.text);
+            for (int i = 0; i < answers.length; i++){
+                br.write("\n"+q.answers[i]);
+            }
+            br.close();
+            fr.close();
+
+        }catch (Exception e){
+            System.out.println(e);
+        }
     }
 }

@@ -23,3 +23,11 @@ Capital city of Estonia?
 Tallin
 Riga
 Helsinki
+Capital sity of France?
+Paris
+Lissabon
+Berlin
+Capital city of Japan?
+Tokio
+Be Jing
+Hong Kong
